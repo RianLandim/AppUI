@@ -1,7 +1,7 @@
 {
   "expo": {
-    "name": "questao",
-    "slug": "questao",
+    "name": "AppUI",
+    "slug": "AppUI",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",

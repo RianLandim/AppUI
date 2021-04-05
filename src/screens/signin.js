@@ -1,10 +1,33 @@
 import React,{useState} from "react";
-import {View, Text, StyleSheet, TextInput, ImageBackground, TouchableOpacity } from "react-native";
+import axios from "axios";
+import {View, Text, StyleSheet, TextInput, ImageBackground, TouchableOpacity, Alert } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
-import { Zocial, Feather } from "@expo/vector-icons"
+import { Zocial, Fontisto } from "@expo/vector-icons";
 
 import {screenWidth} from "../utils/screensize";
 import { imgloginsc } from "../utils/links"
+
+function Submit({navigation}){
+    try {
+        const  response = await axios.post("http://localhost:3000/users", {username, password})
+        if(response.data.lenght > 0){
+            navigation.navigate("Home")
+        }else{
+            Alert.alert(
+                "Falha ao logar!",
+                "Usuario ou senha incorretos!",
+                [
+                    {
+                        text:"Ok",
+                        onPress: () => console.log("Ok pressionado")
+                    }
+                ]
+            );
+        };
+    } catch (error) {
+        console.log(error);
+    };
+};
 
 export default function SignIn(){
 
@@ -15,7 +38,7 @@ export default function SignIn(){
     <ImageBackground source={{uri: imgloginsc }} style={{flex:1, resizeMode: "cover"}}>
         <SafeAreaView style={styles.container}>
             <View>
-                <Text style={styles.logo}>Welcome to app</Text>
+                <Text style={styles.logo}>AppUI</Text>
             </View>
             <View style={styles.username}>
                 <Zocial name="guest" size={24} color="white" style={styles.icon}/>
@@ -28,7 +51,7 @@ export default function SignIn(){
                 />
             </View>
             <View style={styles.password}>
-                <Feather name="lock" size={24} color="white" style={styles.icon} />
+                <Fontisto name="locked" size={24} color="white" style={styles.icon} />
                 <TextInput 
                 placeholder="Password" 
                 value={password} 
@@ -38,7 +61,7 @@ export default function SignIn(){
                 />
             </View>
             <View style={{padding: 15,}}> 
-                <TouchableOpacity style={styles.button}>
+                <TouchableOpacity style={styles.button} onPress={Submit} >
                     <Text style={styles.login} >Login</Text>
                 </TouchableOpacity>
             </View>
